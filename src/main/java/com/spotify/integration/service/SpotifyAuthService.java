@@ -89,6 +89,51 @@ public class SpotifyAuthService {
         }
     }
 
+    public Map<String, Object> getUserPlaylists() {
+        String validAccessToken = getValidAccessToken();
+        try {
+            String responseBody = webClient.get()
+                    .uri("https://api.spotify.com/v1/me/playlists")
+                    .header("Authorization", "Bearer " + validAccessToken)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(responseBody, new TypeReference<>() {});
+        } catch (WebClientResponseException e) {
+            throw new SpotifyAuthException("Failed to fetch user playlists: " + e.getResponseBodyAsString(), e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error parsing JSON response.", e);
+        }
+    }
+
+    public Map<String, Object> getUserProfile() {
+        String validAccessToken = getValidAccessToken();
+        try {
+            String responseBody = webClient.get()
+                    .uri("https://api.spotify.com/v1/me")
+                    .header("Authorization", "Bearer " + validAccessToken)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(responseBody, new TypeReference<>() {});
+        } catch (WebClientResponseException e) {
+            throw new SpotifyAuthException("Failed to fetch user profile: " + e.getResponseBodyAsString(), e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error parsing JSON response.", e);
+        }
+    }
+
+    public String getValidAccessToken() {
+        if (isTokenExpired()) {
+            refreshAccessToken(refreshToken);
+        }
+        return accessToken;
+    }
+
     public String generateSpotifyAuthUrl() {
         String codeVerifier = pkceUtil.generateCodeVerifier();
         String codeChallenge = pkceUtil.generateCodeChallenge(codeVerifier);
@@ -101,7 +146,7 @@ public class SpotifyAuthService {
                 "&redirect_uri=" + redirectUri +
                 "&code_challenge=" + codeChallenge +
                 "&code_challenge_method=S256" +
-                "&scope=user-read-private user-read-email" +
+                "&scope=user-read-private user-read-email playlist-read-private playlist-modify-public" +
                 "&state=" + codeVerifier;
     }
 
