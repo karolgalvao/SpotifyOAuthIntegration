@@ -1,7 +1,6 @@
 package com.spotify.integration.controller;
 
 import com.spotify.integration.service.SpotifyAuthService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,24 +17,22 @@ public class SpotifyCallbackController {
     }
 
     @GetMapping("/auth/callback")
-    public Map<String, String> handleSpotifyCallback (
+    public Map<String, String> handleSpotifyCallback(
             @RequestParam("code") String code,
-            @RequestParam(value = "error", required = false) String error,
-            HttpSession httpSession) {
+            @RequestParam("state") String state,
+            @RequestParam(value = "error", required = false) String error) {
 
         if (error != null) {
             return Map.of("error", "Authorization failed: " + error);
         }
 
-        String codeVerifier = (String) httpSession.getAttribute("codeVerifier");
-
-        if (codeVerifier == null) {
-            return Map.of("error", "Session expired or code verifier missing.");
+        if (state == null || state.isEmpty()) {
+            return Map.of("error", "State (code verifier) is missing or invalid.");
         }
 
         try {
-            String accessToken = spotifyAuthService.exchangeAuthorizationCodeForToken(code, codeVerifier);
-            return Map.of("accessToken", accessToken);
+            Map<String, String> tokenResponse = spotifyAuthService.exchangeAuthorizationCodeForToken(code, state);
+            return tokenResponse;
         } catch (Exception e) {
             return Map.of("error", e.getMessage());
         }
