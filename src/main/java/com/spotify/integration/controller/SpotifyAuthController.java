@@ -16,8 +16,8 @@ public class SpotifyAuthController {
     }
 
     @GetMapping("auth/spotify")
-    public RedirectView authenticate(HttpSession httpSession) {
-        String spotifyAuthUrl = spotifyAuthService.generateSpotifyAuthUrl(httpSession);
+    public RedirectView authenticate() {
+        String spotifyAuthUrl = spotifyAuthService.generateSpotifyAuthUrl();
 
         return new RedirectView(spotifyAuthUrl);
     }

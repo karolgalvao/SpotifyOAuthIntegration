@@ -14,6 +14,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/spotify", "/auth/callback").permitAll()
+                        .requestMatchers("/user/profile", "/user/playlists").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form.disable())
