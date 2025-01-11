@@ -34,7 +34,7 @@ SpotifyOAuthIntegration is a Java Spring Boot application that showcases how to 
 *   Maven installed (optional if using Maven Wrapper)
 *   A Spotify Developer account:
     *   Create a Spotify app to obtain the `Client ID`, `Client Secret`, and configure the `Redirect URI`.
-    *   Ensure your Spotify app has the necessary scopes enabled, such as `user-read-private`, `user-read-email`, `playlist-read-private`, `playlist-modify-public`, and **`user-top-read`** 
+    *   Ensure your Spotify app has the necessary scopes enabled, such as `user-read-private`, `user-read-email`, `playlist-read-private`, `playlist-modify-public`, and *`user-top-read`
 
 ### Configuration
 
