@@ -1,6 +1,6 @@
 # Spotify OAuth Integration with Spring Boot
 
-This Java Spring Boot application demonstrates Spotify API integration using OAuth 2.0 with the PKCE flow, including retrieval of user's top tracks.
+This Java Spring Boot application demonstrates Spotify API integration using OAuth 2.0 with the PKCE flow.
 
 ## Overview
 
