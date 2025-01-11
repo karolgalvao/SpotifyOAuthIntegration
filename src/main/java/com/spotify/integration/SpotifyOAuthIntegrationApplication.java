@@ -11,5 +11,4 @@ public class SpotifyOAuthIntegrationApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpotifyOAuthIntegrationApplication.class, args);
 	}
-
 }
