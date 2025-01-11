@@ -41,8 +41,7 @@ SpotifyOAuthIntegration is a Java Spring Boot application that showcases how to 
 1.  Clone the repository:
 
     ```bash
-    git clone [https://github.com/karolgalvao/SpotifyOAuthIntegration.git](https://github.com/karolgalvao/SpotifyOAuthIntegration.git)
-    ```
+git clone https://github.com/karolgalvao/SpotifyOAuthIntegration.git
 
 2.  Navigate to the project directory:
 
