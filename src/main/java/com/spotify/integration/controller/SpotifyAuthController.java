@@ -1,7 +1,6 @@
 package com.spotify.integration.controller;
 
 import com.spotify.integration.service.SpotifyAuthService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.view.RedirectView;
@@ -21,5 +20,4 @@ public class SpotifyAuthController {
 
         return new RedirectView(spotifyAuthUrl);
     }
-
 }
